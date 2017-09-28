@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Moving to the next NethServer UI</title>
+        <link rel="stylesheet" href="./css/reveal.css">
+        <link rel="stylesheet" href="./css/theme/black.css" id="theme">
+        <link rel="stylesheet" href="./css/highlight/zenburn.css">
+        <link rel="stylesheet" href="./css/print/paper.css" type="text/css" media="print">
+          <link rel="stylesheet" href="./assets/css/custom.css">
+          <link rel="stylesheet" href="./assets/css/font-awesome.min.css">
+
+    </head>
+    <body>
+
+        <div class="reveal">
+            <div class="slides"><section  data-markdown><script type="text/template">
+
+<i class="fa fa-plane" aria-hidden="true"></i>
+
+# Moving to the next NethServer UI
+
+[@davideprincipi](https://twitter.com/davideprincipi) - #neth17
+</script></section><section  data-markdown><script type="text/template">
+## What we've done
+
+~ 50 modules / 120 RPMs <!-- .element: class="fragment" data-fragment-index="1" -->
+
+6 years <!-- .element: class="fragment" data-fragment-index="2" -->
+</script></section><section  data-markdown><script type="text/template">
+### Anatomy of NethServer
+
+|   |    | |
+| - | ------ | ------------------------ |
+| 3 | Web UI | Server Manager ⇨ <b>Nethgui</b> |
+| 2 | Configuration manager | DB, events, templates, actions ⇨ <b>e-smith</b> |
+| 1 | Upstream distro | <span class="fragment strike" data-fragment-index="2">CentOS 6</span> <b class="fragment fade-in" data-fragment-index="2">CentOS 7</b> |
+
+ns6 ⇨ ns7 (2016) major distro update <!-- .element: class="fragment" data-fragment-index="2" -->
+</script></section><section  data-markdown><script type="text/template">
+<!-- .slide: data-transition-speed="slow" data-transition="slide-out" -->
+
+### https&#58;//nethserver:980
+
+* Nethgui framework (PHP)  <!-- .element: class="fragment" -->
+
+* Apache web server  (mod_php) <!-- .element: class="fragment" -->
+
+* e-smith API (signal-event, config setprop...)  <!-- .element: class="fragment" -->
+
+* sudo privilege escalation (srvmgr ⇨ root)  <!-- .element: class="fragment" -->
+</script></section><section  data-markdown><script type="text/template">
+## Why moving away
+
+Accounts provider <!-- .element: class="fragment" -->
+
+Backup config <!-- .element: class="fragment" -->
+
+-----
+
+* people don't read the docs/forum <!-- .element: class="fragment" -->
+
+* people love guided procedures (wizards) <!-- .element: class="fragment" --> <span class="fragment">but they are <u>too difficult to develop</u></span>
+</script></section><section  data-markdown><script type="text/template">
+<i>Making sysadmin’s life easier with Open Source</i> <!-- .element: class="fragment fade-out" data-fragment-index="1" -->
+
+making developer’s life easier <!-- .element: class="fragment" data-fragment-index="1" -->
+
+-----
+### goal <!-- .element: class="fragment" data-fragment-index="2" -->
+
+using standard tools <!-- .element: class="fragment" data-fragment-index="2" -->
+
+<aside class="notes"><p>rewording the NethServer mission...</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+<!-- .slide: data-transition-speed="slow" data-transition="slide-out" -->
+
+### targets
+
+* decrease development times <!-- .element: class="fragment" -->
+
+* increase number of developers <!-- .element: class="fragment" -->
+</script></section><section  data-markdown><script type="text/template">
+## What we're doing
+
+July '17 &ndash; knocking on another door<br>https&#58;//nethserver:9090 <!-- .element: class="fragment" -->
+</script></section><section  data-markdown><script type="text/template">
+### Cockpit
+
+* Free Software project sponsored by Red Hat <!-- .element: class="fragment" -->
+* available from upstream repositories <!-- .element: class="fragment" -->
+* available on other distributions too <!-- .element: class="fragment" -->
+
+<aside class="notes"><p>following project since 2015, met developer Stef Walter at FOSDEM&#39;17</p>
+<p>  <code>yum install cockpit</code></p>
+<p>  other distros == standard</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+### Cockpit - the "web shell"
+
+* embedded web server <!-- .element: class="fragment" -->
+* spawns user-privileged process (the "bridge") <!-- .element: class="fragment" -->
+* fast web socket message transport <!-- .element: class="fragment" -->
+* Patternfly UI framework (HTML + CSS) <!-- .element: class="fragment" -->
+* JavaScript framework agnostic <!-- .element: class="fragment" -->
+
+
+<aside class="notes"><p>PolicyKit and sudo privilege escalation</p>
+<p>  Cockpit runs its own web server that talks to the &quot;bridge&quot;</p>
+<p>  Patternfly == (RHEL) standard components</p>
+<p>  AngularJS / prominent, well-known JS framework from Google</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+<!-- .slide: data-transition-speed="slow" data-transition="slide-out" -->
+
+### <i class="fa fa-hand-paper-o" aria-hidden="true"></i> Hurdles on my way 
+
+* learn new JavaScript tools <!-- .element: class="fragment" -->
+* learn asynchronous programming <!-- .element: class="fragment" -->
+</script></section><section  data-markdown><script type="text/template">
+## Why Cockpit
+
+* Aiming to standardization <!-- .element: class="fragment" -->
+
+* Teaming <!-- .element: class="fragment" -->
+
+* Bonus: multi-server interface <!-- .element: class="fragment" -->
+
+<aside class="notes"><p>I strongly believe Cockpit meet our needs</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+> Cockpit has a beautiful architecture, tightly integrated with the underlying
+system and allows managing multiple servers from the same interface.
+
+> It is light fast and I love the way it handles user privileges. <!-- .element: class="fragment" -->
+<br>[davidep](http://community.nethserver.org/t/what-do-you-think-about-cockpit/973/5)
+Jun&nbsp;'15
+
+</script></section><section  data-markdown><script type="text/template">
+<!-- .slide:  data-transition-speed="slow" data-background-size="contain" data-background="./img/cockpit1.png" -->
+</script></section><section  data-markdown><script type="text/template">
+<i class="fa fa-github-square" aria-hidden="true"></i> [nethserver/nethserver-cockpit](https://github.com/NethServer/nethserver-cockpit)
+
+``# yum --enablerepo=nethserver-testing install nethserver-cockpit`` <!-- .element: class="fragment" -->
+</script></section><section  data-markdown><script type="text/template">
+## What we'll do
+
+* write the docs
+
+* share code and ideas
+
+* gather feedback
+</script></section><section  data-markdown><script type="text/template">
+### Ideas for ns7
+
+https&#58;//nethserver:<u>980</u>/<span class="fragment strike" data-fragment-index="2">cockpit/</span>
+
+1. embed Cockpit modules in Server Manager<br>reverse HTTP proxy: ``cockpit/`` ⇨ port 9090
+2. develop new NS modules on Cockpit <!-- .element: class="fragment fade-in" data-fragment-index="1" --> 
+3. switch to Cockpit on feature parity <!-- .element: class="fragment fade-in" data-fragment-index="2" --> 
+   <span class="fragment fade-in" data-fragment-index="3">(?)</span>
+</script></section><section  data-markdown><script type="text/template">
+### Ideas for ns8
+
+|   |    |  |
+| - | ------ | ------------------------ 
+| 3 | Web UI | Server Manager <span class="fragment fade-in" data-fragment-index="2">⇨ Cockpit</span> 
+| 2 | Configuration manager | DB, events, templates, actions <span class="fragment fade-in" data-fragment-index="3">⇨ Ansible</span> 
+| 1 | Upstream distro | CentOS 8 <span class="fragment fade-in" data-fragment-index="1">(?)</span> 
+</script></section><section  data-markdown><script type="text/template">
+<i class="fa fa-plane" aria-hidden="true"></i>
+
+[@davideprincipi](https://twitter.com/davideprincipi) - #neth17</script></section></div>
+        </div>
+
+        <script src="./lib/js/head.min.js"></script>
+        <script src="./js/reveal.js"></script>
+
+        <script>
+            function extend() {
+              var target = {};
+              for (var i = 0; i < arguments.length; i++) {
+                var source = arguments[i];
+                for (var key in source) {
+                  if (source.hasOwnProperty(key)) {
+                    target[key] = source[key];
+                  }
+                }
+              }
+              return target;
+            }
+
+            // Optional libraries used to extend on reveal.js
+            var deps = [
+              { src: './lib/js/classList.js', condition: function() { return !document.body.classList; } },
+              { src: './plugin/markdown/marked.js', condition: function() { return !!document.querySelector('[data-markdown]'); } },
+              { src: './plugin/markdown/markdown.js', condition: function() { return !!document.querySelector('[data-markdown]'); } },
+              { src: './plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+              { src: './plugin/zoom-js/zoom.js', async: true },
+              { src: './plugin/notes/notes.js', async: true },
+              { src: './plugin/math/math.js', async: true }
+            ];
+
+            // default options to init reveal.js
+            var defaultOptions = {
+              controls: true,
+              progress: true,
+              history: true,
+              center: true,
+              transition: 'default', // none/fade/slide/convex/concave/zoom
+              dependencies: deps
+            };
+
+            // options from URL query string
+            var queryOptions = Reveal.getQueryHash() || {};
+
+            var options = {"transition":"none"};
+            options = extend(defaultOptions, options, queryOptions);
+        </script>
+
+          <script src="./assets/scripts/custom.js"></script>
+
+        <script>
+            Reveal.initialize(options);
+        </script>
+    </body>
+</html>
